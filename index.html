@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>BDSMchecklist（调查用）</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header id="appHeader" class="app-header app-header--center">
+      <h1 id="mainTitle">BDSMchecklist（调查用）</h1>
+      <div id="mainDescription" class="description-card">
+        <div class="description-card-inner">
+          <div class="description-icon">ℹ️</div>
+          <div class="description-body">
+            <div class="description-title">使用说明</div>
+            <p>请点击按钮选择「是否尝试过」「喜欢程度」「角色」，然后依次完成各大类的填写。</p>
+            <p>全部填写完成后，在最后一页选择「生成文字结果」或「生成 Excel 结果」进行保存。</p>
+            <p class="description-note">
+              p.s. 对某一项目的喜欢程度打分：<br>
+              1 = 非常不喜欢； 2 = 没有乐趣； 3 = 一般 / 还行； 4 = 喜欢； 5 = 非常享受。
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 顶部大类导航（只在大类页面和最后一页显示） -->
+    <nav id="categoryNav" class="category-nav hidden"></nav>
+
+    <main id="mainContent">
+      <!-- 第二页：填表人基本信息 -->
+      <section id="basicInfoSection" class="step-section hidden">
+        <h2 class="subtitle">填表人基本信息</h2>
+        <div id="basicFields">
+          <div class="basic-row" data-field="fillerName">
+            <label>填表人：
+              <input type="text" id="fillerName" placeholder="请输入姓名或昵称">
+            </label>
+          </div>
+          <div class="basic-row basic-row--hidden" data-field="fillingDate">
+            <label>填表日期：
+              <input type="date" id="fillingDate" readonly>
+            </label>
+          </div>
+          <div class="basic-row basic-row--hidden" data-field="age">
+            <label>年龄：
+              <input type="number" id="age" min="0" max="150" placeholder="数字" style="width: 80px;">
+            </label>
+          </div>
+          <div class="basic-row basic-row--hidden" data-field="sex">
+            <label>生理性别：
+              <select id="sexSelect">
+                <option value="">请选择</option>
+                <option value="生理男">生理男</option>
+                <option value="生理女">生理女</option>
+                <option value="男TS女">男TS女</option>
+                <option value="女TS男">女TS男</option>
+                <option value="自定义">其它/自定义</option>
+              </select>
+              <input
+                type="text"
+                id="sexCustom"
+                placeholder="选择“其它/自定义”后，在此输入具体内容"
+                style="display:none; margin-left:4px;"
+              >
+            </label>
+          </div>
+          <div class="basic-row basic-row--hidden" data-field="orientation">
+            <label>性取向：
+              <select id="orientationSelect">
+                <option value="">请选择</option>
+                <option value="顺直男">顺直男</option>
+                <option value="顺直女">顺直女</option>
+                <option value="男同性恋">男同性恋</option>
+                <option value="女同性恋">女同性恋</option>
+                <option value="双性恋">双性恋</option>
+                <option value="泛性恋">泛性恋</option>
+                <option value="TS女异性恋">TS女异性恋</option>
+                <option value="TS男异性恋">TS男异性恋</option>
+                <option value="TS女同性恋">TS女同性恋</option>
+                <option value="TS男同性恋">TS男同性恋</option>
+                <option value="其他">其他（手动输入文字）</option>
+              </select>
+              <input
+                type="text"
+                id="orientationCustom"
+                placeholder="选择“其他”后，在此输入具体内容"
+                style="display:none; margin-left:4px;"
+              >
+            </label>
+          </div>
+          <div class="basic-row basic-row--hidden" data-field="relationship">
+            <label>感情状态：
+              <select id="relationshipSelect">
+                <option value="">请选择</option>
+                <option value="单身">单身</option>
+                <option value="有恋爱对象">有恋爱对象</option>
+                <option value="有订婚对象">有订婚对象</option>
+                <option value="有单个固定性对象">有单个固定性对象</option>
+                <option value="有多个固定性对象">有多个固定性对象</option>
+                <option value="有不定性对象">有不定性对象</option>
+                <option value="已婚">已婚</option>
+                <option value="离异">离异</option>
+                <option value="丧偶">丧偶</option>
+                <option value="其他">其他（手动输入文字）</option>
+              </select>
+              <input
+                type="text"
+                id="relationshipCustom"
+                placeholder="选择“其他”后，在此输入具体内容"
+                style="display:none; margin-left:4px;"
+              >
+            </label>
+          </div>
+          <div class="basic-row basic-row--hidden" data-field="partnerCount">
+            <label>性经历人数：
+              <input
+                type="number"
+                id="partnerCount"
+                min="0"
+                placeholder="数字"
+                style="width: 90px;"
+              >
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- 每一大类页面 -->
+      <section id="categorySection" class="step-section hidden">
+        <h2 id="categoryTitle" class="subtitle"></h2>
+        <div id="basicInfoSummary" class="basic-summary"></div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>项目</th>
+                <th>是否尝试过</th>
+                <th>喜欢程度</th>
+                <th>角色</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="bulkActionsRow">
+                <td class="bulk-label-cell">一键设置：</td>
+                <td>
+                  <div class="bulk-group">
+                    <button type="button" class="bulk-btn" data-bulk-type="tried" data-bulk-value="是">全部 是</button>
+                    <button type="button" class="bulk-btn" data-bulk-type="tried" data-bulk-value="否">全部 否</button>
+                  </div>
+                </td>
+                <td>
+                  <div class="bulk-group">
+                    <button type="button" class="bulk-btn" data-bulk-type="level" data-bulk-value="1">全部 1</button>
+                    <button type="button" class="bulk-btn" data-bulk-type="level" data-bulk-value="2">全部 2</button>
+                    <button type="button" class="bulk-btn" data-bulk-type="level" data-bulk-value="3">全部 3</button>
+                    <button type="button" class="bulk-btn" data-bulk-type="level" data-bulk-value="4">全部 4</button>
+                    <button type="button" class="bulk-btn" data-bulk-type="level" data-bulk-value="5">全部 5</button>
+                  </div>
+                </td>
+                <td>
+                  <div class="bulk-group">
+                    <button type="button" class="bulk-btn" data-bulk-type="role" data-bulk-value="主动">全部 主动</button>
+                    <button type="button" class="bulk-btn" data-bulk-type="role" data-bulk-value="被动">全部 被动</button>
+                    <button type="button" class="bulk-btn" data-bulk-type="role" data-bulk-value="双向">全部 双向</button>
+                    <button type="button" class="bulk-btn" data-bulk-type="role" data-bulk-value="都不想">全部 都不想</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tbody id="itemsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 最后一页 -->
+      <section id="finalSection" class="step-section hidden">
+        <h2 class="subtitle center">感谢填写！</h2>
+        <p class="description center">请选择输出形式：</p>
+        <div class="final-buttons">
+          <button id="btnTextResult" class="btn-primary" type="button">生成文字结果</button>
+          <button id="btnExcelResult" class="btn-secondary" type="button">生成 Excel 结果</button>
+        </div>
+        <div id="textResultContainer" class="text-result hidden">
+          <h3 class="subtitle small">文字结果（可直接复制）：</h3>
+          <textarea id="textResult" readonly></textarea>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-controls">
+      <button id="nextBtn" class="btn-primary" type="button">下一步</button>
+    </footer>
+
+    <div id="message" class="message"></div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

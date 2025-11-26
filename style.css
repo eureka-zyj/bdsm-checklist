@@ -1,0 +1,481 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #f5f5f7;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+#app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.app-header {
+  text-align: center;
+  margin-top: 16px;
+  margin-bottom: 12px;
+  transition: margin-top 0.3s ease;
+}
+
+.app-header--center {
+  margin-top: 18vh;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 26px;
+}
+
+/* 顶部说明卡片美化 */
+.description-card {
+  margin: 14px auto 0;
+  max-width: 680px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #f9fafb, #eef2ff);
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.description-card-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.description-icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: #e0edff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #2563eb;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+.description-body {
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.description-title {
+  font-weight: 600;
+  font-size: 13px;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.description-body p {
+  margin: 2px 0;
+}
+
+.description-note {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px dashed #d1d5db;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* 顶部大类导航条：单行 + 箭头风格 */
+.category-nav {
+  margin-top: 16px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #ddd;
+  overflow-x: auto;
+  white-space: nowrap;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
+}
+
+.category-nav.hidden {
+  display: none;
+}
+
+/* 滚动条稍微细一点 */
+.category-nav::-webkit-scrollbar {
+  height: 4px;
+}
+.category-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+.category-nav::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 999px;
+}
+
+.nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  padding: 0 10px 0 0;
+  margin-right: 4px;
+  font-size: 13px;
+  color: #6b7280;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* 右侧小箭头 › */
+.nav-tab::after {
+  content: "›";
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+/* 最后一个不显示箭头 */
+.nav-tab:last-child::after {
+  content: "";
+}
+
+.nav-tab.active {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.nav-tab.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.subtitle {
+  font-size: 18px;
+  margin: 4px 0 10px;
+}
+
+.subtitle.center {
+  text-align: center;
+}
+
+.subtitle.small {
+  font-size: 15px;
+}
+
+.description.center {
+  text-align: center;
+  color: #555;
+}
+
+/* 每一页主体 */
+.step-section {
+  margin-top: 16px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.step-section.hidden {
+  display: none;
+}
+
+.step-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 基本信息表单 */
+#basicFields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.basic-row {
+  font-size: 14px;
+}
+
+.basic-row label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.basic-row input,
+.basic-row select {
+  padding: 4px 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.basic-row.basic-row--hidden {
+  display: none;
+}
+
+.basic-row.field-error label {
+  color: #c0392b;
+}
+
+/* 基本信息摘要（出现在大类页面上方） */
+.basic-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #e2e2e8;
+  font-size: 13px;
+  color: #444;
+}
+
+.basic-summary span strong {
+  font-weight: 600;
+}
+
+/* 表格区域 */
+.table-wrapper {
+  margin-top: 8px;
+  border: 1px solid #eee;
+  max-height: 70vh;
+  overflow: auto;
+  background: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: center;
+  font-size: 12px;
+}
+
+th {
+  background: #f5f5f5;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+td.item-name {
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.category-row td {
+  background: #f0f0f5;
+  font-weight: 700;
+  text-align: left;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+}
+
+.option-btn {
+  padding: 3px 6px;
+  border-radius: 6px;
+  border: 1px solid #888;
+  background: #fff;
+  font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+  min-width: 38px;
+}
+
+.option-btn:hover {
+  background: #f0f0f0;
+}
+
+.option-btn.selected {
+  border: 2px solid #2d7ff9;
+  font-weight: 600;
+  box-shadow: 0 0 4px rgba(45,127,249,0.4);
+}
+
+.row-missing {
+  background: #fff3f0 !important;
+}
+
+/* 表头下面的一键按钮行 */
+#bulkActionsRow td {
+  background: #faf5ff;
+}
+
+.bulk-label-cell {
+  text-align: right;
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.bulk-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  padding: 3px 0;
+}
+
+.bulk-btn {
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid #ccc;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.bulk-btn:hover {
+  background: #f3f3f3;
+}
+
+/* 底部按钮 & 提示信息 */
+.footer-controls {
+  margin-top: 18px;
+  text-align: right;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #2d7ff9;
+  color: #fff;
+  border-color: #2d7ff9;
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: #333;
+  border-color: #ccc;
+}
+
+.btn-primary.btn-disabled {
+  background: #cccccc;
+  border-color: #bbbbbb;
+  color: #777777;
+  cursor: default;
+}
+
+.message {
+  margin-top: 8px;
+  min-height: 1.2em;
+  font-size: 13px;
+  color: #c0392b;
+}
+
+/* 最后一页 */
+.final-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 16px 0 10px;
+}
+
+.text-result {
+  margin-top: 8px;
+}
+
+.text-result textarea {
+  width: 100%;
+  min-height: 260px;
+  font-size: 13px;
+  font-family: Consolas, "Courier New", monospace;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+/* 工具类 */
+.hidden {
+  display: none !important;
+}
+/* 基本信息页：居中显示 */
+#basicInfoSection {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#basicFields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.basic-row label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.basic-row input,
+.basic-row select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #d0d5dd;
+  min-width: 220px;
+  text-align: center;
+}
+
+/* 顶部大类导航：单行横向滚动 + 箭头样式（如果你之前已经有类似样式，可以按需替换） */
+.category-nav {
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+.category-nav .nav-tab {
+  position: relative;
+  padding: 6px 16px 6px 20px;
+  border-radius: 999px;
+  border: none;
+  background: #f2f4f7;
+  color: #667085;
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.category-nav .nav-tab::after {
+  content: "›";
+  margin-left: 4px;
+  font-size: 12px;
+}
+
+.category-nav .nav-tab.active {
+  background: #4f8cff;
+  color: #fff;
+}
+
+.category-nav .nav-tab:disabled,
+.category-nav .nav-tab.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
